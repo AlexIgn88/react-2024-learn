@@ -1,11 +1,10 @@
-// import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { restaurants } from "../materials/mock.js";
 
 createRoot(document.getElementById("root")).render(
   <main>
     <div>
-      <h1>{restaurants[0].name}</h1>
+      <h2>{restaurants[0].name}</h2>
       <h3>Меню</h3>
       <ul>
         <li>{restaurants[0].menu[0].name}</li>
@@ -19,7 +18,7 @@ createRoot(document.getElementById("root")).render(
       </ul>
     </div>
     <div>
-      <h1>{restaurants[1].name}</h1>
+      <h2>{restaurants[1].name}</h2>
       <h3>Меню</h3>
       <ul>
         <li>{restaurants[1].menu[0].name}</li>
@@ -33,7 +32,7 @@ createRoot(document.getElementById("root")).render(
       </ul>
     </div>
     <div>
-      <h1>{restaurants[2].name}</h1>
+      <h2>{restaurants[2].name}</h2>
       <h3>Меню</h3>
       <ul>
         <li>{restaurants[2].menu[0].name}</li>
@@ -46,7 +45,7 @@ createRoot(document.getElementById("root")).render(
       </ul>
     </div>
     <div>
-      <h1>{restaurants[3].name}</h1>
+      <h2>{restaurants[3].name}</h2>
       <h3>Меню</h3>
       <ul>
         <li>{restaurants[3].menu[0].name}</li>
