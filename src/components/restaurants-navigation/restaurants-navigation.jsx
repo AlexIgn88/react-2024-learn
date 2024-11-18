@@ -1,10 +1,9 @@
-import { restaurants } from "../../../materials/mock.js";
 import {
   restaurantsNavigation,
   restaurantButton,
 } from "./restaurants-navigation.module.scss";
 
-const RestaurantsNavigation = ({ onRestaurantChange }) => {
+const RestaurantsNavigation = ({ restaurants, onRestaurantChange }) => {
   return (
     <div className={restaurantsNavigation}>
       {restaurants.map((restaurant) => (
