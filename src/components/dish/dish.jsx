@@ -1,21 +1,17 @@
-import { useState } from "react";
+import { useAmount } from "../../hooks/useAmount.jsx";
 import { dishStyle, quantityStyle } from "./dish.module.scss";
 
 const Dish = ({ dish }) => {
-  const [quantity, setQuantity] = useState(0);
-
-  const decreaseHandler = () => setQuantity(quantity > 0 ? quantity - 1 : 0);
-  const increaseHandler = () =>
-    setQuantity(quantity <= 4 ? quantity + 1 : quantity);
+  const { amount, decrease, increase } = useAmount(0);
 
   return (
     <div className={dishStyle}>
       <h4>{dish.name}</h4>
       <h4>Цена: {dish.price} руб.</h4>
       <div className={quantityStyle}>
-        Выбрано: {quantity}
-        <button onClick={decreaseHandler}>-</button>
-        <button onClick={increaseHandler}>+</button>
+        Выбрано: {amount}
+        <button onClick={decrease}>-</button>
+        <button onClick={increase}>+</button>
       </div>
       <div>
         {dish.ingredients.map((ingredient) => (
