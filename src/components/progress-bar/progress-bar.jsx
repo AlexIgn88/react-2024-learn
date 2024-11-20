@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { progressBar } from "./progress-bar.module.scss";
 
 const ProgressBar = () => {
-  const [showVerticalScroll, setShowVerticalScroll] = useState(false);
-  const progressBarRef = useRef(null);
+  const [progressBarWidth, setProgressBarWidth] = useState({ width: "0vw" });
 
   useEffect(() => {
     const doc = document.documentElement;
@@ -11,24 +10,19 @@ const ProgressBar = () => {
 
     const documentHeight = Math.max(doc.scrollHeight, body.scrollHeight); //общая высота документа
     const clientHeight = Math.max(doc.clientHeight, body.clientHeight); //видимая высота документа
-    const maxScrollTop = documentHeight - clientHeight; //максимальное значение вертикальной прокрутки документа
 
-    setShowVerticalScroll(!!maxScrollTop);
+    const calculateWidth = () => {
+      const currentScrolling = window.scrollY; //значение текущей прокрутки
+      const maxScrollTop = documentHeight - clientHeight; //максимальное значение вертикальной прокрутки документа
 
-    const calculateWidth = (currentScrolling, maxScrollTop) => {
       const widthValue = maxScrollTop
         ? Math.round((currentScrolling / maxScrollTop) * 100)
         : 0;
-      return widthValue + "vw";
+      return { width: widthValue + "vw" };
     };
 
     const handleScroll = () => {
-      const currentScrolling = window.scrollY;
-
-      progressBarRef.current.style.width = calculateWidth(
-        currentScrolling,
-        maxScrollTop,
-      );
+      setProgressBarWidth(calculateWidth());
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -37,9 +31,7 @@ const ProgressBar = () => {
     };
   }, []);
 
-  return showVerticalScroll ? (
-    <div ref={progressBarRef} className={progressBar}></div>
-  ) : null;
+  return <div className={progressBar} style={progressBarWidth}></div>;
 };
 
 export default ProgressBar;

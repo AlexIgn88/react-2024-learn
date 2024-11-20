@@ -32,14 +32,9 @@ const reducer = (state, { type, payload }) => {
         rating: state.rating <= 4 ? state.rating + 1 : state.rating,
       };
     case ACTION_TYPES.CLEAR_FORM:
-      return {
-        ...state,
-        name: DEFAULT_FORM_VALUE.name,
-        text: DEFAULT_FORM_VALUE.text,
-        rating: DEFAULT_FORM_VALUE.rating,
-      };
+      return DEFAULT_FORM_VALUE;
     case ACTION_TYPES.SEND_FORM:
-      return { ...state };
+      return state;
     default:
       return state;
   }

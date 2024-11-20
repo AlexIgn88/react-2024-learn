@@ -1,6 +1,6 @@
 import { dishStyle } from "./dish.module.scss";
 import Counter from "../counter/counter.jsx";
-import { useAmount } from "../../hooks/useAmount.jsx";
+import { useAmount } from "./useAmount.jsx";
 
 const Dish = ({ dish }) => {
   const { amount, decrease, increase } = useAmount(0);
