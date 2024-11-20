@@ -1,5 +1,6 @@
+import { dishStyle } from "./dish.module.scss";
+import Counter from "../counter/counter.jsx";
 import { useAmount } from "../../hooks/useAmount.jsx";
-import { dishStyle, quantityStyle } from "./dish.module.scss";
 
 const Dish = ({ dish }) => {
   const { amount, decrease, increase } = useAmount(0);
@@ -8,11 +9,12 @@ const Dish = ({ dish }) => {
     <div className={dishStyle}>
       <h4>{dish.name}</h4>
       <h4>Цена: {dish.price} руб.</h4>
-      <div className={quantityStyle}>
-        Выбрано: {amount}
-        <button onClick={decrease}>-</button>
-        <button onClick={increase}>+</button>
-      </div>
+      <Counter
+        text="Выбрано: "
+        value={amount}
+        decrease={decrease}
+        increase={increase}
+      />
       <div>
         {dish.ingredients.map((ingredient) => (
           <span key={ingredient}>{ingredient}</span>

@@ -1,12 +1,22 @@
 import { useForm } from "./use-form";
+import Counter from "../counter/counter.jsx";
+import { formStyle } from "./review-form.module.scss";
 
 const ReviewForm = () => {
-  const { form, setName, setText, setRating, clearForm } = useForm();
+  const {
+    form,
+    setName,
+    setText,
+    decreaseRating,
+    increaseRating,
+    sendForm,
+    clearForm,
+  } = useForm();
   const { name, text, rating } = form;
   return (
-    <form>
+    <form className={formStyle}>
       <div>
-        <span>Name</span>
+        <span>Имя пользователя</span>
         <input
           type="text"
           value={name}
@@ -14,7 +24,7 @@ const ReviewForm = () => {
         />
       </div>
       <div>
-        <span>Text</span>
+        <span>Текст отзыва</span>
         <input
           type="text"
           value={text}
@@ -22,21 +32,32 @@ const ReviewForm = () => {
         />
       </div>
       <div>
-        <span>Rating</span>
-        <input
-          type="text"
+        <Counter
+          text="Рейтинг: "
           value={rating}
-          onChange={(event) => setRating(event.target.value)}
+          decrease={decreaseRating}
+          increase={increaseRating}
         />
       </div>
-      <button
-        onClick={(event) => {
-          event.preventDefault();
-          clearForm();
-        }}
-      >
-        Clear
-      </button>
+      <div>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            sendForm();
+            clearForm();
+          }}
+        >
+          Отправить форму
+        </button>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            clearForm();
+          }}
+        >
+          Очистить
+        </button>
+      </div>
     </form>
   );
 };

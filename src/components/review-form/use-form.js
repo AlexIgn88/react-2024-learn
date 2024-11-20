@@ -3,13 +3,17 @@ import { useReducer } from "react";
 const DEFAULT_FORM_VALUE = {
   name: "",
   text: "",
-  rating: "",
+  rating: 0,
 };
 
 const ACTION_TYPES = {
   SET_NAME_ACTION: "SET_NAME",
   SET_TEXT: "SET_TEXT",
   SET_RATING: "SET_RATING",
+  DECREASE_RATING: "DECREASE_RATING",
+  INCREASE_RATING: "INCREASE_RATING",
+  CLEAR_FORM: "CLEAR_FORM",
+  SEND_FORM: "SEND_FORM",
 };
 
 const reducer = (state, { type, payload }) => {
@@ -20,6 +24,22 @@ const reducer = (state, { type, payload }) => {
       return { ...state, text: payload };
     case ACTION_TYPES.SET_RATING:
       return { ...state, rating: payload };
+    case ACTION_TYPES.DECREASE_RATING:
+      return { ...state, rating: state.rating > 0 ? state.rating - 1 : 0 };
+    case ACTION_TYPES.INCREASE_RATING:
+      return {
+        ...state,
+        rating: state.rating <= 4 ? state.rating + 1 : state.rating,
+      };
+    case ACTION_TYPES.CLEAR_FORM:
+      return {
+        ...state,
+        name: DEFAULT_FORM_VALUE.name,
+        text: DEFAULT_FORM_VALUE.text,
+        rating: DEFAULT_FORM_VALUE.rating,
+      };
+    case ACTION_TYPES.SEND_FORM:
+      return { ...state };
     default:
       return state;
   }
@@ -36,25 +56,32 @@ export const useForm = () => {
   const setRating = (rating) => {
     dispatch({ type: ACTION_TYPES.SET_RATING, payload: rating });
   };
+  const decreaseRating = () => {
+    dispatch({ type: ACTION_TYPES.DECREASE_RATING });
+  };
+  const increaseRating = () => {
+    dispatch({ type: ACTION_TYPES.INCREASE_RATING });
+  };
   const clearForm = () => {
     dispatch({
-      type: ACTION_TYPES.SET_NAME_ACTION,
-      payload: DEFAULT_FORM_VALUE.name,
-    });
-    dispatch({
-      type: ACTION_TYPES.SET_TEXT,
-      payload: DEFAULT_FORM_VALUE.text,
-    });
-    dispatch({
-      type: ACTION_TYPES.SET_RATING,
-      payload: DEFAULT_FORM_VALUE.rating,
+      type: ACTION_TYPES.CLEAR_FORM,
     });
   };
+  const sendForm = () => {
+    dispatch({
+      type: ACTION_TYPES.SEND_FORM,
+    });
+    console.log(`Форма отправлена. ${JSON.stringify(form)}`);
+  };
+
   return {
     form,
     setName,
     setText,
     setRating,
+    decreaseRating,
+    increaseRating,
+    sendForm,
     clearForm,
   };
 };
