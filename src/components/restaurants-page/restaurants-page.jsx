@@ -20,8 +20,6 @@ const RestaurantsPage = () => {
         onRestaurantChange={handlerRestaurantChange}
       />
       <Restaurant restaurant={activeRestaurant} />
-      <Restaurant restaurant={activeRestaurant} />
-      <Restaurant restaurant={activeRestaurant} />
     </>
   );
 };
