@@ -5,15 +5,11 @@ const ProgressBar = () => {
   const [progressBarWidth, setProgressBarWidth] = useState({ width: "0vw" });
 
   useEffect(() => {
-    const doc = document.documentElement;
-    const body = document.body;
-
-    const documentHeight = Math.max(doc.scrollHeight, body.scrollHeight); //общая высота документа
-    const clientHeight = Math.max(doc.clientHeight, body.clientHeight); //видимая высота документа
-
     const calculateWidth = () => {
       const currentScrolling = window.scrollY; //значение текущей прокрутки
-      const maxScrollTop = documentHeight - clientHeight; //максимальное значение вертикальной прокрутки документа
+      const maxScrollTop =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight; //максимальное значение вертикальной прокрутки документа
 
       const widthValue = maxScrollTop
         ? Math.round((currentScrolling / maxScrollTop) * 100)
