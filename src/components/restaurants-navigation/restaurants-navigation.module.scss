@@ -1,15 +1,15 @@
 .restaurantsNavigation {
+  padding-top: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 30px;
-  padding-top: 10px;
 }
 
 .restaurantButton {
   background-color: #4caf50;
-  border: none;
   color: white;
+  border: none;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
