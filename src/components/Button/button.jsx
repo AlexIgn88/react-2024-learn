@@ -3,7 +3,7 @@ import { themeName } from "../theme-context/theme-consts.js";
 import classNames from "classnames";
 import { defaultTheme, alternativeTheme } from "./button.module.scss";
 
-const Button = ({ text, handler, styleClass, isActive }) => {
+const Button = ({ text, handler, styleClass, disabled }) => {
   const { theme } = useTheme();
   //styleClass - если необходима дополнительная кастомизация конкретных кнопок
 
@@ -15,7 +15,7 @@ const Button = ({ text, handler, styleClass, isActive }) => {
       type="button"
       onClick={handler}
       className={classNames(styleClass, buttonThemeClass)}
-      disabled={isActive}
+      disabled={disabled}
     >
       {text}
     </button>

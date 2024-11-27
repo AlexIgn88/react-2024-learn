@@ -16,9 +16,9 @@ const SwitchThemeButton = () => {
   const switchButtonText = (() => {
     switch (true) {
       case theme === themeName.default && isDesktop():
-        return "Включить альтернативную тему";
+        return "Альтернативная тема";
       case theme === themeName.alternative && isDesktop():
-        return "Включить стандартная тему";
+        return "Стандартная тема";
       case theme === themeName.default && !isDesktop():
         return <TiStarburst />;
       case theme === themeName.alternative && !isDesktop():
