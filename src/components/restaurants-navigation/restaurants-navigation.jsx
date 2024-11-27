@@ -1,19 +1,15 @@
-import {
-  restaurantsNavigation,
-  restaurantButton,
-} from "./restaurants-navigation.module.scss";
+import { restaurantsNavigation } from "./restaurants-navigation.module.scss";
+import Button from "../Button/button.jsx";
 
 const RestaurantsNavigation = ({ restaurants, onRestaurantChange }) => {
   return (
     <div className={restaurantsNavigation}>
       {restaurants.map((restaurant) => (
-        <button
+        <Button
           key={restaurant.id}
-          className={restaurantButton}
-          onClick={() => onRestaurantChange(restaurant)}
-        >
-          {restaurant.name}
-        </button>
+          text={restaurant.name}
+          handler={() => onRestaurantChange(restaurant)}
+        />
       ))}
     </div>
   );

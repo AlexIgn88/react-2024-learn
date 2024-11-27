@@ -1,16 +1,13 @@
 import { counterStyle } from "./counter.module.scss";
+import Button from "../Button/button.jsx";
 
 const Counter = ({ text, value, decrease, increase }) => {
   return (
     <div className={counterStyle}>
       <span>{text}</span>
       <span>{value}</span>
-      <button type="button" onClick={decrease}>
-        -
-      </button>
-      <button type="button" onClick={increase}>
-        +
-      </button>
+      <Button text="-" handler={decrease} />
+      <Button text="+" handler={increase} />
     </div>
   );
 };
