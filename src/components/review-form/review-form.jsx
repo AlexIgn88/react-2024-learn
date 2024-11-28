@@ -1,6 +1,7 @@
 import { useForm } from "./use-form";
 import Counter from "../counter/counter.jsx";
 import { formStyle } from "./review-form.module.scss";
+import Button from "../Button/button.jsx";
 
 const ReviewForm = () => {
   const {
@@ -40,23 +41,21 @@ const ReviewForm = () => {
         />
       </div>
       <div>
-        <button
-          onClick={(event) => {
+        <Button
+          text="Отправить форму"
+          handler={(event) => {
             event.preventDefault();
             sendForm();
             clearForm();
           }}
-        >
-          Отправить форму
-        </button>
-        <button
-          onClick={(event) => {
+        />
+        <Button
+          text="Очистить"
+          handler={(event) => {
             event.preventDefault();
             clearForm();
           }}
-        >
-          Очистить
-        </button>
+        />
       </div>
     </form>
   );
