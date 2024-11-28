@@ -7,8 +7,8 @@ const Button = ({ text, handler, styleClass, disabled }) => {
   const { theme } = useTheme();
   //styleClass - если необходима дополнительная кастомизация конкретных кнопок
 
-  const buttonThemeClass = (() =>
-    theme === themeName.default ? defaultTheme : alternativeTheme)();
+  const buttonThemeClass =
+    theme === themeName.default ? defaultTheme : alternativeTheme;
 
   return (
     <button

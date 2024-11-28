@@ -10,13 +10,13 @@ const AuthButton = () => {
 
   const authButtonText = (() => {
     switch (true) {
-      case !user.authorized && isDesktop():
+      case !user.authorized && isDesktop:
         return "Войти";
-      case user.authorized && isDesktop():
+      case user.authorized && isDesktop:
         return "Выйти";
-      case !user.authorized && !isDesktop():
+      case !user.authorized && !isDesktop:
         return <TiLockClosed />;
-      case user.authorized && !isDesktop():
+      case user.authorized && !isDesktop:
         return <TiLockOpen />;
     }
   })();
@@ -36,7 +36,7 @@ const AuthButton = () => {
 
   return (
     <div className={authButton}>
-      {user.authorized && isDesktop() && <div>{user.fullName}</div>}
+      {user.authorized && isDesktop && <div>{user.fullName}</div>}
       <Button
         text={authButtonText}
         handler={!user.authorized ? loginHandler : logoutHandler}
