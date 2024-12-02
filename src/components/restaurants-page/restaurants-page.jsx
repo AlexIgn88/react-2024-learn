@@ -1,28 +1,45 @@
 import { useCallback, useState } from "react";
-import RestaurantsNavigation from "../restaurants-navigation/restaurants-navigation.jsx";
+import RestaurantNavigation from "../restaurant-navigation/restaurant-navigation.jsx";
 import Restaurant from "../restaurant/restaurant.jsx";
+import { main, restaurantNavigation } from "./restaurants-page.module.scss";
 import { useSelector } from "react-redux";
-import { selectAllRestaurants } from "../../redux/entities/restaurants/restaurants-slice.js";
+import { selectRestaurantsIds } from "../../redux/entities/restaurants/restaurants-slice.js";
 
 const RestaurantsPage = () => {
-  const restaurants = useSelector((state) => selectAllRestaurants(state));
+  const restaurantsIds = useSelector((state) => selectRestaurantsIds(state));
 
-  const [activeRestaurant, setActiveRestaurant] = useState(restaurants[0]);
-
-  const handlerRestaurantChange = useCallback(
-    (restaurant) => {
-      if (restaurant.id !== activeRestaurant.id)
-        setActiveRestaurant(restaurant);
-    },
-    [activeRestaurant.id],
+  const [activeRestaurantId, setActiveRestaurantId] = useState(
+    restaurantsIds[0],
   );
+
+  const handlerRestaurantIdChange = useCallback(
+    (restaurantId) => {
+      if (restaurantId !== activeRestaurantId)
+        setActiveRestaurantId(restaurantId);
+    },
+    [activeRestaurantId],
+  );
+
   return (
     <>
-      <RestaurantsNavigation
-        restaurants={restaurants}
-        onRestaurantChange={handlerRestaurantChange}
-      />
-      <Restaurant restaurant={activeRestaurant} />
+      <div className={restaurantNavigation}>
+        {restaurantsIds.map((restaurantId) => (
+          <RestaurantNavigation
+            key={restaurantId}
+            restaurantId={restaurantId}
+            onRestaurantIdChange={handlerRestaurantIdChange}
+          />
+        ))}
+      </div>
+
+      <main className={main}>
+        {activeRestaurantId && (
+          <Restaurant
+            key={activeRestaurantId}
+            restaurantId={activeRestaurantId}
+          />
+        )}
+      </main>
     </>
   );
 };
