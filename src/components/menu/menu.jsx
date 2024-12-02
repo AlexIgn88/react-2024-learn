@@ -5,7 +5,7 @@ const Menu = ({ menu }) => {
     <div>
       <h3>Меню</h3>
       {menu.map((dish) => (
-        <Dish key={dish.id} dish={dish} />
+        <Dish key={dish} dishId={dish} />
       ))}
     </div>
   );

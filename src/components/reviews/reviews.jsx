@@ -5,7 +5,7 @@ const Reviews = ({ reviews }) => {
     <div>
       <h3>Отзывы</h3>
       {reviews.map((review) => (
-        <Review key={review.id} review={review} />
+        <Review key={review} reviewId={review} />
       ))}
     </div>
   );
