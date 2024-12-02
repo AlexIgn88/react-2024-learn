@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { normalizedRestaurants } from "../../../constants/normalized-mock.js";
 
 const initialState = {
@@ -14,14 +14,14 @@ export const restaurantsSlice = createSlice({
   name: "restaurants",
   initialState,
   selectors: {
+    selectRestaurants: (state) => state.entities,
     selectRestaurantsIds: (state) => state.ids,
-    selectRestaurantById: (state, id) => state.entities[id],
-    selectAllRestaurants: (state) => Object.values(state.entities),
   },
 });
 
-export const {
-  selectRestaurantsIds,
-  selectRestaurantById,
-  selectAllRestaurants,
-} = restaurantsSlice.selectors;
+export const { selectRestaurants } = restaurantsSlice.selectors;
+
+export const selectAllRestaurants = createSelector(
+  [selectRestaurants],
+  (restaurants) => Object.values(restaurants),
+);

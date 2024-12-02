@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { normalizedUsers } from "../../../constants/normalized-mock.js";
 
 const initialState = {
-  entities: normalizedUsers.reduce((acc, restaurant) => {
-    acc[restaurant.id] = restaurant;
+  entities: normalizedUsers.reduce((acc, user) => {
+    acc[user.id] = user;
 
     return acc;
   }, {}),
