@@ -2,8 +2,11 @@ import { dishStyle } from "./dish.module.scss";
 import Counter from "../counter/counter.jsx";
 import { useAmount } from "./useAmount.jsx";
 import { useUser } from "../user-context/use-user.js";
+import { selectDishById } from "../../redux/entities/dishes/dishes-slice.js";
+import { useSelector } from "react-redux";
 
-const Dish = ({ dish }) => {
+const Dish = ({ dishId }) => {
+  const dish = useSelector((state) => selectDishById(state, dishId));
   const { amount, decrease, increase } = useAmount(0);
   const {
     user: { authorized },
