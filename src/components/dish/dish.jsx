@@ -1,22 +1,34 @@
 import { dishStyle } from "./dish.module.scss";
 import Counter from "../counter/counter.jsx";
-import { useAmount } from "./useAmount.jsx";
-import { useUser } from "../user-context/use-user.js";
+import { useAuth } from "../auth-context/use-auth.js";
 import { selectDishById } from "../../redux/entities/dishes/dishes-slice.js";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  removeFromCart,
+  selectCartItemAmountById,
+} from "../../redux/ui/cart/cart-slice.js";
 
 const Dish = ({ dishId }) => {
   const dish = useSelector((state) => selectDishById(state, dishId));
-  const { amount, decrease, increase } = useAmount(0);
+  const dispatch = useDispatch();
+  const amount =
+    useSelector((state) => selectCartItemAmountById(state, dishId)) || 0;
+  const decrease = () => dispatch(removeFromCart(dishId));
+  const increase = () => dispatch(addToCart(dishId));
   const {
-    user: { authorized },
-  } = useUser();
+    user: { isAuthorized },
+  } = useAuth();
+
+  if (!dish.name) {
+    return null;
+  }
 
   return (
     <div className={dishStyle}>
       <h4>{dish.name}</h4>
       <h4>Цена: {dish.price} руб.</h4>
-      {authorized && (
+      {isAuthorized && (
         <Counter
           text="Выбрано: "
           value={amount}
@@ -26,7 +38,7 @@ const Dish = ({ dishId }) => {
       )}
       <div>
         {dish.ingredients.map((ingredient) => (
-          <span key={ingredient}>{ingredient}</span>
+          <div key={ingredient}>{ingredient}</div>
         ))}
       </div>
     </div>
