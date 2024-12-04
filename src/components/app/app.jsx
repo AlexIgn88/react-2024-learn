@@ -1,9 +1,45 @@
 import Layout from "../layout/layout.jsx";
-import RestaurantsPage from "../restaurants-page/restaurants-page.jsx";
+import RestaurantsPage from "../../pages/restaurants-page/restaurants-page.jsx";
 import { ThemeContextProvider } from "../theme-context/theme-context.jsx";
 import { AuthContextProvider } from "../auth-context/auth-context.jsx";
 import { Provider } from "react-redux";
 import { store } from "../../redux/store.js";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
+import RestaurantPage from "../../pages/restaurant-page/restaurant-page.jsx";
+import HomePage from "../../pages/home-page/home-page.jsx";
+import MenuPage from "../../pages/menu-page/menu-page.jsx";
+import ReviewsPage from "../../pages/reviews-page/reviews-page.jsx";
+import DishPage from "../../pages/dish-page/dish-page.jsx";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomePage />,
+    errorElement: <Navigate to="/" />,
+  },
+  {
+    path: "/restaurants",
+    element: <RestaurantsPage />,
+    children: [
+      {
+        path: ":restaurantId",
+        element: <RestaurantPage />,
+        children: [
+          { path: "menu", element: <MenuPage /> },
+          { path: "reviews", element: <ReviewsPage /> },
+        ],
+      },
+    ],
+  },
+  {
+    path: "/dish/:dishId",
+    element: <DishPage />,
+  },
+]);
 
 const App = () => {
   return (
@@ -11,7 +47,7 @@ const App = () => {
       <AuthContextProvider>
         <ThemeContextProvider>
           <Layout>
-            <RestaurantsPage />
+            <RouterProvider router={router} />
           </Layout>
         </ThemeContextProvider>
       </AuthContextProvider>

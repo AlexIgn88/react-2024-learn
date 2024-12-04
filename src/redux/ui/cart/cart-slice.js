@@ -33,7 +33,6 @@ export const selectCartSlice = (state) => state.cart;
 export const selectCartItems = createSelector([selectCartSlice], (cartState) =>
   Object.keys(cartState).reduce((acc, id) => {
     acc.push({ id, amount: cartState[id] });
-
     return acc;
   }, []),
 );
