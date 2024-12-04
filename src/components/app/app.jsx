@@ -18,26 +18,32 @@ import DishPage from "../../pages/dish-page/dish-page.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
-    errorElement: <Navigate to="/" />,
-  },
-  {
-    path: "/restaurants",
-    element: <RestaurantsPage />,
+    element: <Layout />,
     children: [
       {
-        path: ":restaurantId",
-        element: <RestaurantPage />,
+        path: "/",
+        element: <HomePage />,
+        errorElement: <Navigate to="/" />,
+      },
+      {
+        path: "/restaurants",
+        element: <RestaurantsPage />,
         children: [
-          { path: "menu", element: <MenuPage /> },
-          { path: "reviews", element: <ReviewsPage /> },
+          {
+            path: ":restaurantId",
+            element: <RestaurantPage />,
+            children: [
+              { path: "menu", element: <MenuPage /> },
+              { path: "reviews", element: <ReviewsPage /> },
+            ],
+          },
         ],
       },
+      {
+        path: "/dish/:dishId",
+        element: <DishPage />,
+      },
     ],
-  },
-  {
-    path: "/dish/:dishId",
-    element: <DishPage />,
   },
 ]);
 
@@ -46,9 +52,7 @@ const App = () => {
     <Provider store={store}>
       <AuthContextProvider>
         <ThemeContextProvider>
-          <Layout>
-            <RouterProvider router={router} />
-          </Layout>
+          <RouterProvider router={router} />
         </ThemeContextProvider>
       </AuthContextProvider>
     </Provider>

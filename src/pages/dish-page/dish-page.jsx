@@ -6,7 +6,7 @@ const DishPage = () => {
 
   return (
     <main>
-      <Dish dishId={dishId} />
+      <Dish dishId={dishId} showIngredients />
     </main>
   );
 };

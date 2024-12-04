@@ -16,7 +16,7 @@ const Cart = () => {
       <ul className={dishLists}>
         {items.map(({ id }) => (
           <li key={id}>
-            <Dish dishId={id} />
+            <Dish dishId={id} cartView />
           </li>
         ))}
       </ul>

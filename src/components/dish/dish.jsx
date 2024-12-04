@@ -9,7 +9,7 @@ import {
   selectCartItemAmountById,
 } from "../../redux/ui/cart/cart-slice.js";
 
-const Dish = ({ dishId }) => {
+const Dish = ({ dishId, showIngredients, cartView }) => {
   const dish = useSelector((state) => selectDishById(state, dishId));
   const dispatch = useDispatch();
   const amount =
@@ -24,22 +24,34 @@ const Dish = ({ dishId }) => {
     return null;
   }
 
+  const flex = cartView ? { display: "block" } : { display: "flex" };
+
   return (
-    <div className={dishStyle}>
-      <h4>{dish.name}</h4>
-      <h4>Цена: {dish.price} руб.</h4>
-      {isAuthorized && (
-        <Counter
-          text="Выбрано: "
-          value={amount}
-          decrease={decrease}
-          increase={increase}
-        />
+    <div className={dishStyle} style={flex}>
+      <div>
+        <h4>{dish.name}</h4>
+        <h4>Цена: {dish.price} руб.</h4>
+      </div>
+      {showIngredients && (
+        <div>
+          <h4>Ингредиенты</h4>
+          {dish.ingredients.map((ingredient) => (
+            <div key={ingredient}>{ingredient}</div>
+          ))}
+        </div>
       )}
       <div>
-        {dish.ingredients.map((ingredient) => (
-          <div key={ingredient}>{ingredient}</div>
-        ))}
+        {isAuthorized && (
+          <>
+            {!cartView && <h4>Выберите количество</h4>}
+            <Counter
+              text="Выбрано: "
+              value={amount}
+              decrease={decrease}
+              increase={increase}
+            />
+          </>
+        )}
       </div>
     </div>
   );

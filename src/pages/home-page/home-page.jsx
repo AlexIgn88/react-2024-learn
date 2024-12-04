@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
     <main className={homePage}>
-      <h1 className={title}>Добро пожаловать в лучшие рестораны!</h1>
+      <h1 className={title}>Добро пожаловать в Лучшие рестораны!</h1>
       <Link to="/restaurants">Рестораны</Link>
     </main>
   );

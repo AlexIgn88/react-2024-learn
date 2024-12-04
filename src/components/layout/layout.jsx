@@ -4,8 +4,9 @@ import ProgressBar from "../progress-bar/progress-bar.jsx";
 import { layout } from "./layout.module.scss";
 import Cart from "../cart/cart.jsx";
 import { useAuth } from "../auth-context/use-auth.js";
+import { Outlet } from "react-router-dom";
 
-const Layout = ({ children }) => {
+const Layout = () => {
   const {
     user: { isAuthorized },
   } = useAuth();
@@ -14,7 +15,7 @@ const Layout = ({ children }) => {
     <div className={layout}>
       <Header />
       <ProgressBar />
-      {children}
+      <Outlet />
       {isAuthorized && <Cart />}
       <Footer />
     </div>
