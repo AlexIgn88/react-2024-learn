@@ -1,33 +1,57 @@
 import { dishStyle } from "./dish.module.scss";
 import Counter from "../counter/counter.jsx";
-import { useAmount } from "./useAmount.jsx";
-import { useUser } from "../user-context/use-user.js";
+import { useAuth } from "../auth-context/use-auth.js";
 import { selectDishById } from "../../redux/entities/dishes/dishes-slice.js";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  removeFromCart,
+  selectCartItemAmountById,
+} from "../../redux/ui/cart/cart-slice.js";
 
-const Dish = ({ dishId }) => {
+const Dish = ({ dishId, showIngredients, cartView }) => {
   const dish = useSelector((state) => selectDishById(state, dishId));
-  const { amount, decrease, increase } = useAmount(0);
+  const dispatch = useDispatch();
+  const amount =
+    useSelector((state) => selectCartItemAmountById(state, dishId)) || 0;
+  const decrease = () => dispatch(removeFromCart(dishId));
+  const increase = () => dispatch(addToCart(dishId));
   const {
-    user: { authorized },
-  } = useUser();
+    user: { isAuthorized },
+  } = useAuth();
+
+  if (!dish.name) {
+    return null;
+  }
+
+  const flex = cartView ? { display: "block" } : { display: "flex" };
 
   return (
-    <div className={dishStyle}>
-      <h4>{dish.name}</h4>
-      <h4>Цена: {dish.price} руб.</h4>
-      {authorized && (
-        <Counter
-          text="Выбрано: "
-          value={amount}
-          decrease={decrease}
-          increase={increase}
-        />
+    <div className={dishStyle} style={flex}>
+      <div>
+        <h4>{dish.name}</h4>
+        <h4>Цена: {dish.price} руб.</h4>
+      </div>
+      {showIngredients && (
+        <div>
+          <h4>Ингредиенты</h4>
+          {dish.ingredients.map((ingredient) => (
+            <div key={ingredient}>{ingredient}</div>
+          ))}
+        </div>
       )}
       <div>
-        {dish.ingredients.map((ingredient) => (
-          <span key={ingredient}>{ingredient}</span>
-        ))}
+        {isAuthorized && (
+          <>
+            {!cartView && <h4>Выберите количество</h4>}
+            <Counter
+              text="Выбрано: "
+              value={amount}
+              decrease={decrease}
+              increase={increase}
+            />
+          </>
+        )}
       </div>
     </div>
   );

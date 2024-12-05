@@ -1,5 +1,5 @@
 export const defaultUserObject = {
-  authorized: false,
+  isAuthorized: false,
   firstName: "",
   surname: "",
   get fullName() {

@@ -1,17 +1,14 @@
-import Button from "../Button/button.jsx";
 import { selectRestaurantById } from "../../redux/entities/restaurants/restaurants-slice.js";
 import { useSelector } from "react-redux";
+import NavigationTab from "../navigation-tab/navigation-tab.jsx";
 
-const RestaurantNavigation = ({ restaurantId, onRestaurantIdChange }) => {
+const RestaurantNavigation = ({ restaurantId }) => {
   const restaurant = useSelector((state) =>
     selectRestaurantById(state, restaurantId),
   );
-  return (
-    <Button
-      text={restaurant.name}
-      handler={() => onRestaurantIdChange(restaurantId)}
-    />
-  );
+  const { name } = restaurant;
+
+  return <NavigationTab path={restaurantId} title={name} />;
 };
 
 export default RestaurantNavigation;
