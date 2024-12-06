@@ -1,0 +1,21 @@
+.link {
+  color: black;
+  text-decoration: none;
+  margin-right: 5px;
+  background-color: #ccc;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.link:hover {
+  background-color: #eee;
+  color: #555;
+}
+
+.activeLink {
+  background-color: #eee;
+  color: #555;
+}

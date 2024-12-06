@@ -1,17 +1,13 @@
-import Menu from "../menu/menu.jsx";
-import Reviews from "../reviews/reviews.jsx";
-import ReviewForm from "../review-form/review-form.jsx";
-import { useUser } from "../user-context/use-user.js";
 import { useSelector } from "react-redux";
 import { selectRestaurantById } from "../../redux/entities/restaurants/restaurants-slice.js";
+import { restaurantTitle, tabs, restaurantTab } from "./restaurant.module.scss";
+import NavigationTab from "../navigation-tab/navigation-tab.jsx";
+import { Outlet } from "react-router-dom";
 
 const Restaurant = ({ restaurantId }) => {
   const restaurant = useSelector((state) =>
     selectRestaurantById(state, restaurantId),
   );
-  const {
-    user: { authorized },
-  } = useUser();
 
   if (!restaurant) {
     return;
@@ -19,10 +15,16 @@ const Restaurant = ({ restaurantId }) => {
 
   return (
     <>
-      <h2>{restaurant.name}</h2>
-      <Menu menu={restaurant.menu} />
-      <Reviews reviews={restaurant.reviews} />
-      {authorized && <ReviewForm />}
+      <h2 className={restaurantTitle}>{restaurant.name}</h2>
+      <div className={tabs}>
+        <NavigationTab path="menu" styleClass={restaurantTab} title="Меню" />
+        <NavigationTab
+          path="reviews"
+          styleClass={restaurantTab}
+          title="Отзывы"
+        />
+      </div>
+      <Outlet />
     </>
   );
 };

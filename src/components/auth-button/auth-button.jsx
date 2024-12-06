@@ -1,29 +1,30 @@
-import { useUser } from "../user-context/use-user.js";
+import { useAuth } from "../auth-context/use-auth.js";
 import Button from "../Button/button.jsx";
-import { defaultUserObject } from "../user-context/user-consts.js";
+import { defaultUserObject } from "../auth-context/auth-consts.js";
 import { authButton } from "./auth-button.module.scss";
 import { isDesktop } from "../../ui/ui-utils.js";
 import { TiLockClosed, TiLockOpen } from "react-icons/ti";
 
 const AuthButton = () => {
-  const { user, setUser } = useUser();
+  const { user, setUser } = useAuth();
+  const { isAuthorized, fullName } = user;
 
   const authButtonText = (() => {
     switch (true) {
-      case !user.authorized && isDesktop:
+      case !isAuthorized && isDesktop:
         return "Войти";
-      case user.authorized && isDesktop:
+      case isAuthorized && isDesktop:
         return "Выйти";
-      case !user.authorized && !isDesktop:
+      case !isAuthorized && !isDesktop:
         return <TiLockClosed />;
-      case user.authorized && !isDesktop:
+      case isAuthorized && !isDesktop:
         return <TiLockOpen />;
     }
   })();
 
   const loginHandler = () =>
     setUser({
-      authorized: true,
+      isAuthorized: true,
       firstName: "Петр",
       surname: "Иванов",
       get fullName() {
@@ -36,10 +37,10 @@ const AuthButton = () => {
 
   return (
     <div className={authButton}>
-      {user.authorized && isDesktop && <div>{user.fullName}</div>}
+      {isAuthorized && isDesktop && <div>{fullName}</div>}
       <Button
         text={authButtonText}
-        handler={!user.authorized ? loginHandler : logoutHandler}
+        handler={!isAuthorized ? loginHandler : logoutHandler}
       />
     </div>
   );
