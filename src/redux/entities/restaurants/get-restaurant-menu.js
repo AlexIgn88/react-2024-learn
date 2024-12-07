@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { selectRestaurantMenu } from "./restaurants-slice.js";
 import { selectDishesIds } from "../dishes/dishes-slice.js";
-import { checkItems } from "../../../utils/utils.js";
+import { isContainsAllElements } from "../../../utils/utils.js";
 
 export const getRestaurantMenu = createAsyncThunk(
   "restaurants/getRestaurantMenu",
@@ -20,7 +20,7 @@ export const getRestaurantMenu = createAsyncThunk(
     condition: (id, { getState }) => {
       const restaurantDishesIds = selectRestaurantMenu(getState(), id);
       const allDishesIds = selectDishesIds(getState());
-      return !checkItems(restaurantDishesIds, allDishesIds);
+      return !isContainsAllElements(restaurantDishesIds, allDishesIds);
     },
   },
 );
