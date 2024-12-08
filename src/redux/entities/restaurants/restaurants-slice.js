@@ -1,7 +1,6 @@
 import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 import { getRestaurants } from "./get-restaurants.js";
 import { getRestaurantById } from "./get-restaurant-by-id.js";
-import { getRestaurantMenu } from "./get-restaurant-menu.js";
 
 const entityAdapter = createEntityAdapter();
 
@@ -22,9 +21,6 @@ export const restaurantsSlice = createSlice({
       })
       .addCase(getRestaurantById.fulfilled, (state, { payload }) => {
         entityAdapter.setOne(state, payload);
-      })
-      .addCase(getRestaurantMenu.fulfilled, (state, { payload }) => {
-        entityAdapter.updateOne(state, payload);
       }),
 });
 
