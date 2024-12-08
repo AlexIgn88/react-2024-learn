@@ -20,7 +20,7 @@ const Dish = ({ dishId, showIngredients, cartView }) => {
     user: { isAuthorized },
   } = useAuth();
 
-  if (!dish.name) {
+  if (!dish?.name) {
     return null;
   }
 
