@@ -5,13 +5,20 @@ import { selectUserById } from "../../redux/entities/users/users-slice.js";
 
 const Review = ({ reviewId }) => {
   const review = useSelector((state) => selectReviewById(state, reviewId));
-  const user = useSelector((state) => selectUserById(state, review.userId));
+  const user = useSelector((state) => selectUserById(state, review?.userId));
+
+  if (!review || !user) {
+    return;
+  }
+
+  const { text, rating } = review;
+  const { name } = user;
 
   return (
     <div className={reviewStyle}>
-      <h4>{user.name}</h4>
-      <div>{review.text}</div>
-      <h4>Оценка: {review.rating}</h4>
+      <h4>{name}</h4>
+      <div>{text}</div>
+      <h4>Оценка: {rating}</h4>
     </div>
   );
 };
