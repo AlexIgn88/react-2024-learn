@@ -3,59 +3,67 @@ import Counter from "../counter/counter.jsx";
 import { formStyleTitle, formStyle } from "./review-form.module.scss";
 import Button from "../Button/button.jsx";
 
-const ReviewForm = () => {
-  const {
-    form,
-    setName,
-    setText,
-    decreaseRating,
-    increaseRating,
-    sendForm,
-    clearForm,
-  } = useForm();
-  const { name, text, rating } = form;
+const ReviewForm = ({
+  reviewData,
+  onSubmit,
+  onUpdate,
+  currentUserId,
+  setIsUpdateMode,
+}) => {
+  const { form, setText, decreaseRating, increaseRating, clearForm } =
+    useForm(reviewData);
+  const { text: formText, rating: formRating } = form;
+
+  const isNeedUpdateReview = reviewData && onUpdate && setIsUpdateMode;
+
   return (
     <div>
-      <h3 className={formStyleTitle}>Оставьте отзыв</h3>
+      <h3 className={formStyleTitle}>
+        {reviewData ? "Отредактируйте отзыв" : "Оставьте отзыв"}
+      </h3>
       <form className={formStyle}>
         <div>
-          <span>Имя пользователя</span>
-          <input
-            type="text"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-        </div>
-        <div>
           <span>Текст отзыва</span>
-          <input
-            type="text"
-            value={text}
+          <textarea
+            value={formText}
             onChange={(event) => setText(event.target.value)}
           />
         </div>
         <div>
           <Counter
             text="Рейтинг: "
-            value={rating}
+            value={formRating}
             decrease={decreaseRating}
             increase={increaseRating}
           />
         </div>
         <div>
           <Button
-            text="Отправить форму"
+            text={isNeedUpdateReview ? "Отредактировать" : "Отправить форму"}
             handler={(event) => {
               event.preventDefault();
-              sendForm();
+              if (onSubmit) {
+                onSubmit({
+                  userId: currentUserId,
+                  text: formText,
+                  rating: formRating,
+                });
+              }
+              if (isNeedUpdateReview) {
+                onUpdate(reviewData?.id, {
+                  text: formText,
+                  rating: formRating,
+                });
+                setIsUpdateMode(false);
+              }
               clearForm();
             }}
           />
           <Button
-            text="Очистить"
+            text={isNeedUpdateReview ? "Отмена" : "Очистить"}
             handler={(event) => {
               event.preventDefault();
-              clearForm();
+              isNeedUpdateReview ? setIsUpdateMode(false) : clearForm();
             }}
           />
         </div>

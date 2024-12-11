@@ -1,13 +1,11 @@
 import { useReducer } from "react";
 
 const DEFAULT_FORM_VALUE = {
-  name: "",
   text: "",
   rating: 0,
 };
 
 const ACTION_TYPES = {
-  SET_NAME_ACTION: "SET_NAME",
   SET_TEXT: "SET_TEXT",
   SET_RATING: "SET_RATING",
   DECREASE_RATING: "DECREASE_RATING",
@@ -18,8 +16,6 @@ const ACTION_TYPES = {
 
 const reducer = (state, { type, payload }) => {
   switch (type) {
-    case ACTION_TYPES.SET_NAME_ACTION:
-      return { ...state, name: payload };
     case ACTION_TYPES.SET_TEXT:
       return { ...state, text: payload };
     case ACTION_TYPES.SET_RATING:
@@ -34,17 +30,16 @@ const reducer = (state, { type, payload }) => {
     case ACTION_TYPES.CLEAR_FORM:
       return DEFAULT_FORM_VALUE;
     case ACTION_TYPES.SEND_FORM:
+      console.log(`Форма отправлена. ${JSON.stringify(payload)}`);
       return state;
     default:
       return state;
   }
 };
-export const useForm = () => {
-  const [form, dispatch] = useReducer(reducer, DEFAULT_FORM_VALUE);
+export const useForm = (reviewData) => {
+  const initialState = reviewData || DEFAULT_FORM_VALUE;
+  const [form, dispatch] = useReducer(reducer, initialState);
 
-  const setName = (name) => {
-    dispatch({ type: ACTION_TYPES.SET_NAME_ACTION, payload: name });
-  };
   const setText = (text) => {
     dispatch({ type: ACTION_TYPES.SET_TEXT, payload: text });
   };
@@ -62,16 +57,15 @@ export const useForm = () => {
       type: ACTION_TYPES.CLEAR_FORM,
     });
   };
-  const sendForm = () => {
+  const sendForm = (data) => {
     dispatch({
       type: ACTION_TYPES.SEND_FORM,
+      payload: data,
     });
-    console.log(`Форма отправлена. ${JSON.stringify(form)}`);
   };
 
   return {
     form,
-    setName,
     setText,
     setRating,
     decreaseRating,
