@@ -1,14 +1,8 @@
-import { useSelector } from "react-redux";
-import { selectRestaurantById } from "../../redux/entities/restaurants/restaurants-slice.js";
 import { restaurantTitle, tabs, restaurantTab } from "./restaurant.module.scss";
 import NavigationTab from "../navigation-tab/navigation-tab.jsx";
 import { Outlet } from "react-router-dom";
 
-const Restaurant = ({ restaurantId }) => {
-  const restaurant = useSelector((state) =>
-    selectRestaurantById(state, restaurantId),
-  );
-
+const Restaurant = ({ restaurant }) => {
   if (!restaurant) {
     return;
   }

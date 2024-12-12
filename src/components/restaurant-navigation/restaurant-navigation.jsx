@@ -1,14 +1,9 @@
-import { selectRestaurantById } from "../../redux/entities/restaurants/restaurants-slice.js";
-import { useSelector } from "react-redux";
 import NavigationTab from "../navigation-tab/navigation-tab.jsx";
 
-const RestaurantNavigation = ({ restaurantId }) => {
-  const restaurant = useSelector((state) =>
-    selectRestaurantById(state, restaurantId),
-  );
-  const { name } = restaurant;
+const RestaurantNavigation = ({ restaurant }) => {
+  const { id, name } = restaurant;
 
-  return <NavigationTab path={restaurantId} title={name} />;
+  return <NavigationTab path={id} title={name} />;
 };
 
 export default RestaurantNavigation;
