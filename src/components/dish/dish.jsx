@@ -1,7 +1,6 @@
 import { dishStyle } from "./dish.module.scss";
 import Counter from "../counter/counter.jsx";
 import { useAuth } from "../auth-context/use-auth.js";
-// import { selectDishById } from "../../redux/entities/dishes/dishes-slice.js";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart,
@@ -12,7 +11,6 @@ import { useGetDishByDishIdQuery } from "../../redux/services/api/index.js";
 import LoadErrorDisplay from "../load-error-display/load-error-display.jsx";
 
 const Dish = ({ dishId, showIngredients, cartView }) => {
-  // const dish = useSelector((state) => selectDishById(state, dishId));
   const { data: dish, isLoading, isError } = useGetDishByDishIdQuery(dishId);
 
   const dispatch = useDispatch();
