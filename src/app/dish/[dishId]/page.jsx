@@ -1,5 +1,7 @@
-import { useParams } from "react-router-dom";
-import Dish from "../../components/dish/dish.jsx";
+"use client";
+
+import { useParams } from "next/navigation";
+import Dish from "../../../components/dish/dish.jsx";
 
 const DishPage = () => {
   const { dishId } = useParams();

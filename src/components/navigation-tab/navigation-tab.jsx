@@ -1,17 +1,19 @@
 import classNames from "classnames";
 import { link, activeLink } from "./navigation-tab.module.scss";
-import { NavLink } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const NavigationTab = ({ path, styleClass, title }) => {
+  const pathname = usePathname();
+  const isActive = pathname === path;
+
   return (
-    <NavLink
-      to={path}
-      className={({ isActive }) =>
-        classNames(link, isActive && activeLink, styleClass)
-      }
+    <Link
+      href={path}
+      className={classNames(link, isActive && activeLink, styleClass)}
     >
       {title}
-    </NavLink>
+    </Link>
   );
 };
 

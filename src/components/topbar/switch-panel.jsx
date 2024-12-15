@@ -7,7 +7,8 @@ import ForwardButton from "../forward-button/forward-button.jsx";
 import { isDesktop } from "../../ui/ui-utils.js";
 
 const SwitchPanel = () => {
-  const position = isDesktop
+  const isDesktopMode = isDesktop();
+  const position = isDesktopMode
     ? { position: "absolute" }
     : { position: "static" };
 
