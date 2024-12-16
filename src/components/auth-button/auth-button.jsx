@@ -1,3 +1,5 @@
+"use client";
+
 import { useAuth } from "../auth-context/use-auth.js";
 import Button from "../Button/button.jsx";
 import { defaultUserObject } from "../auth-context/auth-consts.js";
@@ -9,6 +11,7 @@ import { useGetUsersQuery } from "../../redux/services/api/index.js";
 const AuthButton = () => {
   const { user, setUser } = useAuth();
   const { isAuthorized, fullName } = user;
+  const isDesktopMode = isDesktop();
 
   //"захардкордил" id пользователя
   const userId = "dfb982e9-b432-4b7d-aec6-7f6ff2e6af54";
@@ -22,13 +25,13 @@ const AuthButton = () => {
 
   const authButtonText = (() => {
     switch (true) {
-      case !isAuthorized && isDesktop:
+      case !isAuthorized && isDesktopMode:
         return "Войти";
-      case isAuthorized && isDesktop:
+      case isAuthorized && isDesktopMode:
         return "Выйти";
-      case !isAuthorized && !isDesktop:
+      case !isAuthorized && !isDesktopMode:
         return <TiLockClosed />;
-      case isAuthorized && !isDesktop:
+      case isAuthorized && !isDesktopMode:
         return <TiLockOpen />;
     }
   })();
@@ -49,7 +52,7 @@ const AuthButton = () => {
 
   return (
     <div className={authButton}>
-      {isAuthorized && isDesktop && <div>{fullName}</div>}
+      {isAuthorized && isDesktopMode && <div>{fullName}</div>}
       <Button
         text={authButtonText}
         handler={!isAuthorized ? loginHandler : logoutHandler}

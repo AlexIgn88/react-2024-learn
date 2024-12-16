@@ -1,10 +1,12 @@
 import Button from "../Button/button.jsx";
-import { useNavigate } from "react-router-dom";
 import { MdKeyboardArrowLeft } from "react-icons/md";
+import { useRouter } from "next/navigation";
 
 const BackButton = () => {
-  const navigate = useNavigate();
-  const onClick = () => navigate(-1);
+  const router = useRouter();
+  const onClick = () => {
+    router.back();
+  };
 
   return <Button text={<MdKeyboardArrowLeft />} handler={onClick} />;
 };

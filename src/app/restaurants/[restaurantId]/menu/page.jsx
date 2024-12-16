@@ -1,10 +1,13 @@
-import { useParams } from "react-router-dom";
-import Menu from "../../components/menu/menu.jsx";
-import { useGetDishesByRestaurantIdQuery } from "../../redux/services/api/index.js";
-import LoadErrorDisplay from "../../components/load-error-display/load-error-display.jsx";
+"use client";
+
+import { useParams } from "next/navigation";
+import Menu from "../../../../components/menu/menu.jsx";
+import { useGetDishesByRestaurantIdQuery } from "../../../../redux/services/api/index.js";
+import LoadErrorDisplay from "../../../../components/load-error-display/load-error-display.jsx";
 
 const MenuPage = () => {
   const { restaurantId } = useParams();
+
   const { data, isLoading, isError } =
     useGetDishesByRestaurantIdQuery(restaurantId);
 

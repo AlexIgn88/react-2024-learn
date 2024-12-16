@@ -1,12 +1,14 @@
-import { useParams } from "react-router-dom";
-import Reviews from "../../components/reviews/reviews.jsx";
+"use client";
+
+import { useParams } from "next/navigation";
+import Reviews from "../../../../components/reviews/reviews.jsx";
 import {
   useAddReviewMutation,
   useGetReviewsByRestaurantIdQuery,
   useGetUsersQuery,
   useUpdateReviewMutation,
-} from "../../redux/services/api/index.js";
-import LoadErrorDisplay from "../../components/load-error-display/load-error-display.jsx";
+} from "../../../../redux/services/api/index.js";
+import LoadErrorDisplay from "../../../../components/load-error-display/load-error-display.jsx";
 import { useCallback } from "react";
 
 const ReviewsPage = () => {

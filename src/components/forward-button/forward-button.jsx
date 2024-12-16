@@ -1,10 +1,12 @@
 import Button from "../Button/button.jsx";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
 const ForwardButton = () => {
-  const navigate = useNavigate();
-  const onClick = () => navigate(+1);
+  const router = useRouter();
+  const onClick = () => {
+    router.forward();
+  };
 
   return <Button text={<MdKeyboardArrowRight />} handler={onClick} />;
 };

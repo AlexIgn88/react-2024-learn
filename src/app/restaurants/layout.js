@@ -1,11 +1,18 @@
+"use client";
+
 import RestaurantNavigation from "../../components/restaurant-navigation/restaurant-navigation.jsx";
 import { restaurantNavigation } from "./restaurants-page.module.scss";
-import { Outlet } from "react-router-dom";
 import { useGetRestaurantsQuery } from "../../redux/services/api";
 import LoadErrorDisplay from "../../components/load-error-display/load-error-display.jsx";
+import { useAuth } from "../../components/auth-context/use-auth.js";
+import Cart from "../../components/cart/cart.jsx";
 
-const RestaurantsPage = () => {
+const LayoutRestaurantsPage = ({ children }) => {
   const { data, isLoading, isError } = useGetRestaurantsQuery();
+
+  const {
+    user: { isAuthorized },
+  } = useAuth();
 
   return (
     <LoadErrorDisplay data={data} isLoading={isLoading} isError={isError}>
@@ -19,14 +26,12 @@ const RestaurantsPage = () => {
               />
             ))}
           </nav>
-          <main>
-            <Outlet />
-          </main>
+          <main>{children}</main>
+          {isAuthorized && <Cart />}
         </>
       )}
-      )
     </LoadErrorDisplay>
   );
 };
 
-export default RestaurantsPage;
+export default LayoutRestaurantsPage;

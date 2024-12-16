@@ -1,12 +1,13 @@
 import Button from "../Button/button.jsx";
-import { useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
+import Link from "next/link";
 
 const HomeButton = () => {
-  const navigate = useNavigate();
-  const onClick = () => navigate("/");
-
-  return <Button text={<FaHome />} handler={onClick} />;
+  return (
+    <Link href="/">
+      <Button text={<FaHome />} />
+    </Link>
+  );
 };
 
 export default HomeButton;
