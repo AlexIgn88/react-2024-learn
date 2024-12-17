@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { progressBar } from "./progress-bar.module.scss";
 

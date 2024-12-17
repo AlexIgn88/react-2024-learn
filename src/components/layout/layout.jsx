@@ -1,24 +1,28 @@
+"use client";
+
 import Header from "../header/header.jsx";
 import Footer from "../footer/footer.jsx";
 import ProgressBar from "../progress-bar/progress-bar.jsx";
 import { layout } from "./layout.module.scss";
-import Cart from "../cart/cart.jsx";
-import { useAuth } from "../auth-context/use-auth.js";
-import { Outlet } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "../../redux/store.js";
+import { AuthContextProvider } from "../auth-context/auth-context.jsx";
+import { ThemeContextProvider } from "../theme-context/theme-context.jsx";
 
-const Layout = () => {
-  const {
-    user: { isAuthorized },
-  } = useAuth();
-
+const Layout = ({ children }) => {
   return (
-    <div className={layout}>
-      <Header />
-      <ProgressBar />
-      <Outlet />
-      {isAuthorized && <Cart />}
-      <Footer />
-    </div>
+    <Provider store={store}>
+      <AuthContextProvider>
+        <ThemeContextProvider>
+          <div className={layout}>
+            <Header />
+            <ProgressBar />
+            {children}
+            <Footer />
+          </div>
+        </ThemeContextProvider>
+      </AuthContextProvider>
+    </Provider>
   );
 };
 

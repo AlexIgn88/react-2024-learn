@@ -44,6 +44,7 @@ const ReviewForm = ({
               event.preventDefault();
               if (onSubmit) {
                 onSubmit({
+                  id: Date.now(),
                   userId: currentUserId,
                   text: formText,
                   rating: formRating,

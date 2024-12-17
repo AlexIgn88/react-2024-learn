@@ -1,3 +1,5 @@
+"use client";
+
 import { useGetUsersQuery } from "../../redux/services/api/index.js";
 import LoadErrorDisplay from "../load-error-display/load-error-display.jsx";
 import ReviewContent from "./review-content.jsx";

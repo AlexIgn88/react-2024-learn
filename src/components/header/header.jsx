@@ -3,9 +3,11 @@ import SwitchPanel from "../topbar/switch-panel.jsx";
 import { isDesktop } from "../../ui/ui-utils.js";
 
 const Header = () => {
+  const isDesktopMode = isDesktop();
+
   return (
     <header className={header}>
-      {isDesktop && <div>Лучшие рестораны</div>}
+      {isDesktopMode && <div>Лучшие рестораны</div>}
       <SwitchPanel />
     </header>
   );
