@@ -1,5 +1,1 @@
-const RestaurantPage = () => {
-  return null;
-};
-
-export default RestaurantPage;
+export default () => null;
