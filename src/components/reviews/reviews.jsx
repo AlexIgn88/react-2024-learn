@@ -1,11 +1,38 @@
+"use client";
+
 import Review from "../review/review.jsx";
 import { reviewsTitle } from "./reviews.module.scss";
 import ReviewForm from "../review-form/review-form.jsx";
 import { useAuth } from "../auth-context/use-auth.js";
+import {
+  useAddReviewMutation,
+  useUpdateReviewMutation,
+} from "../../redux/services/api/index.js";
+import { useCallback } from "react";
 
-const Reviews = ({ reviews, onAddReview, onUpdateReview }) => {
+const Reviews = ({ restaurantId, reviews, users }) => {
+  const [addReview] = useAddReviewMutation();
+  const [updateReview] = useUpdateReviewMutation();
+
   const { user } = useAuth();
   const { isAuthorized, id } = user;
+  const usersObject = users.reduce((acc, user) => {
+    acc[user.id] = user;
+    return acc;
+  }, {});
+
+  const handleAddReview = useCallback(
+    (review) => {
+      addReview({ restaurantId, review });
+    },
+    [addReview, restaurantId],
+  );
+  const handleUpdateReview = useCallback(
+    (reviewId, review) => {
+      updateReview({ reviewId, review });
+    },
+    [updateReview],
+  );
 
   return (
     <div>
@@ -14,11 +41,14 @@ const Reviews = ({ reviews, onAddReview, onUpdateReview }) => {
         <Review
           key={review.id}
           review={review}
+          user={usersObject[review.userId]}
           currentUserId={id}
-          onUpdate={onUpdateReview}
+          onUpdate={handleUpdateReview}
         />
       ))}
-      {isAuthorized && <ReviewForm onSubmit={onAddReview} currentUserId={id} />}
+      {isAuthorized && (
+        <ReviewForm onSubmit={handleAddReview} currentUserId={id} />
+      )}
     </div>
   );
 };
