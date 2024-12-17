@@ -4,16 +4,11 @@ import Review from "../review/review.jsx";
 import { reviewsTitle } from "./reviews.module.scss";
 import ReviewForm from "../review-form/review-form.jsx";
 import { useAuth } from "../auth-context/use-auth.js";
-import {
-  useAddReviewMutation,
-  useUpdateReviewMutation,
-} from "../../redux/services/api/index.js";
 import { useCallback } from "react";
+import { addReview } from "../../services/add-review.js";
+import { updateReview } from "../../services/update-review.js";
 
 const Reviews = ({ restaurantId, reviews, users }) => {
-  const [addReview] = useAddReviewMutation();
-  const [updateReview] = useUpdateReviewMutation();
-
   const { user } = useAuth();
   const { isAuthorized, id } = user;
   const usersObject = users.reduce((acc, user) => {
@@ -23,16 +18,14 @@ const Reviews = ({ restaurantId, reviews, users }) => {
 
   const handleAddReview = useCallback(
     (review) => {
-      addReview({ restaurantId, review });
+      addReview(restaurantId, review).then((res) => console.log("res", res));
     },
-    [addReview, restaurantId],
+    [restaurantId],
   );
-  const handleUpdateReview = useCallback(
-    (reviewId, review) => {
-      updateReview({ reviewId, review });
-    },
-    [updateReview],
-  );
+
+  const handleUpdateReview = useCallback((reviewId, review) => {
+    updateReview(reviewId, review).then((res) => console.log("res", res));
+  }, []);
 
   return (
     <div>
