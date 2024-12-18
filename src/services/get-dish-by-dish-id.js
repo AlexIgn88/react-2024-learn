@@ -1,4 +1,4 @@
-const GetDishByDishId = async (dishId) => {
+const getDishByDishId = async (dishId) => {
   const result = await fetch(`http://localhost:3001/api/dish/${dishId}`, {
     next: { tags: ["getDishByDishId"] },
   });
@@ -6,4 +6,4 @@ const GetDishByDishId = async (dishId) => {
   return result.json();
 };
 
-export default GetDishByDishId;
+export default getDishByDishId;

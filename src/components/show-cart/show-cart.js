@@ -3,7 +3,7 @@
 import { useAuth } from "../auth-context/use-auth.js";
 import Cart from "../cart/cart.jsx";
 
-const IsAuthorized = () => {
+const ShowCart = () => {
   const {
     user: { isAuthorized },
   } = useAuth();
@@ -15,4 +15,4 @@ const IsAuthorized = () => {
   }
 };
 
-export default IsAuthorized;
+export default ShowCart;

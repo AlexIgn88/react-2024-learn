@@ -9,7 +9,7 @@ import {
   removeFromCart,
   selectCartItemAmountById,
 } from "../../redux/ui/cart/cart-slice.js";
-import GetDishByDishId from "../../services/get-dish-by-dish-id.js";
+import getDishByDishId from "../../services/get-dish-by-dish-id.js";
 import { useEffect, useState } from "react";
 import Loader from "../loader/loader.jsx";
 
@@ -17,7 +17,7 @@ const Dish = ({ dishId, showIngredients, cartView }) => {
   const [dish, setDish] = useState(false);
 
   useEffect(() => {
-    GetDishByDishId(dishId).then((res) => setDish(res));
+    getDishByDishId(dishId).then((res) => setDish(res));
   }, [dishId]);
 
   const dispatch = useDispatch();
