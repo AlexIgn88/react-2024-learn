@@ -1,53 +1,15 @@
-"use client";
-
-import { useParams } from "next/navigation";
 import Reviews from "../../../../components/reviews/reviews.jsx";
-import {
-  useAddReviewMutation,
-  useGetReviewsByRestaurantIdQuery,
-  useGetUsersQuery,
-  useUpdateReviewMutation,
-} from "../../../../redux/services/api/index.js";
-import LoadErrorDisplay from "../../../../components/load-error-display/load-error-display.jsx";
-import { useCallback } from "react";
+import { GetReviewsByRestaurantId } from "../../../../services/get-reviews-by-restaurant-id.js";
+import { getUsers } from "../../../../services/get-users.js";
 
-const ReviewsPage = () => {
-  const { restaurantId } = useParams();
-  const {
-    data: reviews,
-    isLoading: isReviewsLoading,
-    isFetching: isReviewsFetching,
-    isError: isReviewsError,
-  } = useGetReviewsByRestaurantIdQuery(restaurantId);
-  const { data: users } = useGetUsersQuery();
+const ReviewsPage = async ({ params }) => {
+  const { restaurantId } = await params;
 
-  const [addReview] = useAddReviewMutation();
-  const [updateReview] = useUpdateReviewMutation();
-
-  const handleAddReview = useCallback(
-    (review) => {
-      addReview({ restaurantId, review });
-    },
-    [addReview, restaurantId],
-  );
-  const handleUpdateReview = useCallback((reviewId, review) => {
-    updateReview({ reviewId, review });
-  }, []);
+  const reviews = await GetReviewsByRestaurantId(restaurantId);
+  const users = await getUsers();
 
   return (
-    <LoadErrorDisplay
-      data={reviews}
-      isLoading={isReviewsLoading}
-      // isFetching={isReviewsFetching} //отключил, чтобы не крутил спиннер при при rtk query optimistic update
-      isError={isReviewsError}
-      requestStatus={users?.length === 0}
-    >
-      <Reviews
-        reviews={reviews}
-        onAddReview={handleAddReview}
-        onUpdateReview={handleUpdateReview}
-      />
-    </LoadErrorDisplay>
+    <Reviews restaurantId={restaurantId} reviews={reviews} users={users} />
   );
 };
 

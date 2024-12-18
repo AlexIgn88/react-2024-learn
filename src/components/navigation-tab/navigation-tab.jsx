@@ -1,3 +1,5 @@
+"use client";
+
 import classNames from "classnames";
 import { link, activeLink } from "./navigation-tab.module.scss";
 import Link from "next/link";
