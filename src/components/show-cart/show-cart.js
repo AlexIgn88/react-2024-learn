@@ -1,15 +1,14 @@
 "use client";
 
 import { useAuth } from "../auth-context/use-auth.js";
-import Cart from "../cart/cart.jsx";
 
-const ShowCart = () => {
+const ShowCart = ({ children }) => {
   const {
     user: { isAuthorized },
   } = useAuth();
 
   if (isAuthorized) {
-    return <Cart />;
+    return children;
   } else {
     return null;
   }

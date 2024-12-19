@@ -1,3 +1,5 @@
+"use client";
+
 import { useSelector } from "react-redux";
 import { selectCartItems } from "../../redux/ui/cart/cart-slice";
 import Dish from "../dish/dish.jsx";
