@@ -9,16 +9,10 @@ import {
   removeFromCart,
   selectCartItemAmountById,
 } from "../../redux/ui/cart/cart-slice.js";
-import getDishByDishId from "../../services/get-dish-by-dish-id.js";
-import { useEffect, useState } from "react";
 import Loader from "../loader/loader.jsx";
 
-const Dish = ({ dishId, showIngredients, cartView }) => {
-  const [dish, setDish] = useState(false);
-
-  useEffect(() => {
-    getDishByDishId(dishId).then((res) => setDish(res));
-  }, [dishId]);
+const Dish = ({ dish, showIngredients, cartView }) => {
+  const { id: dishId } = dish;
 
   const dispatch = useDispatch();
   const amount =
@@ -30,6 +24,10 @@ const Dish = ({ dishId, showIngredients, cartView }) => {
   } = useAuth();
 
   const flex = cartView ? { display: "block" } : { display: "flex" };
+
+  if (cartView && !amount) {
+    return;
+  }
 
   if (!dish) {
     return <Loader />;
